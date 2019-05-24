@@ -273,25 +273,25 @@ class FilterSetForm(ModelForm):
                 "load" : "reporter",
                 "label" : "Reporter(s)",
                 "class" : ReportSender,
-                "type" : unicode
+                "type" : str
             },
             "report_receiver_domain" : {
                 "load" : "reportee",
                 "label" : "Reportee(s)",
                 "class" : ReportReceiverDomain,
-                "type" : unicode
+                "type" : str
             },
             "raw_dkim_domain" : {
                 "load" : "dkim_domain",
                 "label" : "DKIM Domain(s)",
                 "class" : RawDkimDomain,
-                "type" : unicode
+                "type" : str
             },
             "raw_spf_domain" : {
                 "load" : "spf_domain",
                 "label" : "SPF Domain(s)",
                 "class" : RawSpfDomain,
-                "type" : unicode},
+                "type" : str},
             "raw_dkim_result" :  {
                 "choices" : choices.DKIM_RESULT,
                 "label" : "DKIM Result(s)",
@@ -328,7 +328,7 @@ class FilterSetForm(ModelForm):
         # The keyword arguments passed to the `MultiSelectWidget` constructor
         # are only relevant for multiselect elements that load their options
         # dynamically.
-        for field_name, field_dict in self.multiselect_filter_fields.iteritems():
+        for field_name, field_dict in self.multiselect_filter_fields.items():
             self.fields[field_name] = AsyncTypedMultipleChoiceField(
                     coerce=field_dict.get("type"),
                     required=False,
@@ -392,7 +392,7 @@ class FilterSetForm(ModelForm):
 
         # Create or delete subclasses of `FilterSetFilterField` corresponding
         # to a given multiselect form field.
-        for field_name, field_dict in self.multiselect_filter_fields.iteritems():
+        for field_name, field_dict in self.multiselect_filter_fields.items():
             # Get existing filter values
             existing_filters = list(field_dict["class"].objects.filter(
                     foreign_key=self.instance.id).values_list(

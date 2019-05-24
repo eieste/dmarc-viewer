@@ -33,8 +33,8 @@ GEO_LITE2_CITY_DB = os.path.join(BASE_DIR, "GeoLite2-City.mmdb")
 # https://docs.djangoproject.com/en/1.11/ref/settings/#std:setting-ALLOWED_HOSTS
 # NOTE: Override the setting here if you want to whitelist multiple names,
 # if you only have one, you can also use the environment variable
-allowed_host = os.environ.get("DMARC_VIEWER_ALLOWED_HOSTS")
-ALLOWED_HOSTS = [allowed_host] if allowed_host else []
+
+ALLOWED_HOSTS = os.environ.get("DMARC_VIEWER_ALLOWED_HOSTS", "").split(";")
 
 DEBUG_TOOLBAR_PATCH_SETTINGS = False
 INTERNAL_IPS = (u'::1', u'127.0.0.1')
@@ -114,10 +114,10 @@ WSGI_APPLICATION = 'dmarc_viewer.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'dmarc_viewer_db',
-        'USER': 'dmarc_viewer_db',
-        'PASSWORD': os.environ.get("DMARC_VIEWER_DB_KEY", ""),
+        'ENGINE': os.environ.get("DMARC_VIEWER_DB_ENGINE", 'django.db.backends.postgresql_psycopg2'),
+        'NAME': os.environ.get("DMARC_VIEWER_DB_NAME", "dmarc_viewer_db"),
+        'USER': os.environ.get("DMARC_VIEWER_DB_USER", "dmarc_viewer_db"),
+        'PASSWORD': os.environ.get("DMARC_VIEWER_DB_PASS", "notasecret"),
         'HOST': os.environ.get("DMARC_VIEWER_DB_HOST", "127.0.0.1")
     }
 }
@@ -138,9 +138,9 @@ CACHES = {
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = os.environ.get("DMARC_VIEWER_LANGUAGE_CODE", 'en-us')
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = os.environ.get("DMARC_VIEWER_TIME_ZONE", 'UTC')
 
 USE_I18N = True
 

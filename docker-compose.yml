@@ -1,42 +1,42 @@
 version: '3'
 
+volumes:
+  db-data:
+  app-data:
+
 services:
-  dmarc-viewer-db:
-    # Docker container names must be unique
-    # If you plan on using more containers, remove `container_name`
-    # https://docs.docker.com/compose/compose-file/#container_name
-    container_name: dmarc-viewer-db
+
+  database:
     environment:
-      # User and db name defined in dmarc_viewer.settings.DATABASES
-      POSTGRES_DB: dmarc_viewer_db
-      POSTGRES_USER: dmarc_viewer_db
-      POSTGRES_PASSWORD: ${DMARC_VIEWER_DB_KEY}
+      MYSQL_DATABASE: dmarc-viewer
+      MYSQL_USER: dmarc-viewer
+      MYSQL_PASSWORD: NOTASECRET
+      MYSQL_RANDOM_ROOT_PASSWORD: NOTASECRET
     restart: always
-    image: postgres:9.4
+    image: mariadb
     expose:
-      - "5432"
+      - "3306"
     volumes:
-      # Persist container DB data in mounted host system directory
-      - "./.docker-volumes/db:/var/lib/postgresql/data"
-  dmarc-viewer-app:
-    # Docker container names must be unique
-    # If you plan on using more containers, remove `container_name`
-    # https://docs.docker.com/compose/compose-file/#container_name
-    container_name: dmarc-viewer-app
+      - db-data:/var/lib/mysql/"
+  app:
     environment:
-      # Pass environment variables required in `dmarc_viewer.settings`
-      # Make sure these environment variables are available in the environment,
-      # where you run `docker-compose up`, i.e. your host system
-      - DMARC_VIEWER_DB_KEY
-      - DMARC_VIEWER_ALLOWED_HOSTS
-      - DMARC_VIEWER_SECRET_KEY
-      # The db service name (see above) can be used as path to access the db
-      - DMARC_VIEWER_DB_HOST=dmarc-viewer-db
+      - DMARC_VIEWER_ALLOWED_HOSTS=127.0.0.1;localhost
+      - DMARC_VIEWER_SECRET_KEY=arandomkey
+      - DMARC_VIEWER_DB_HOST=database
+      - DMARC_VIEWER_DB_NAME=dmarc-viewer
+      - DMARC_VIEWER_DB_USER=dmarc-viewer
+      - DMARC_VIEWER_DB_PASS=NOTASECRET
+      - DMARC_VIEWER_DB_ENGINE=django.db.backends.mysql
+      - DMARC_VIEWER_IMAP_HOST=mailhost.com
+      - DMARC_VIEWER_IMAP_USER=dmarcreports@mail.com
+      - DMARC_VIEWER_IMAP_PASS=NOTASECRET
+      - DMARC_VIEWER_IMAP_FOLDER=INBOX
+    depends_on:
+      - database
     build:
       context: .
       dockerfile: ./Dockerfile
     ports:
       - "8000:8000"
     volumes:
-      # Mount read-only host system directory to access reports
-      - "./.docker-volumes/app:/code/shared:ro"
+      - app-data:/code/shared:ro

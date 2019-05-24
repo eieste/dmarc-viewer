@@ -1,6 +1,6 @@
 # Dockerfile for DMARC viewer app
 # Use Alpine as stripped down OS
-FROM python:2.7-alpine
+FROM python:3.6-alpine
 
 # Copy in your requirements file
 ADD requirements.txt /requirements.txt
@@ -16,11 +16,15 @@ RUN set -ex \
             libffi-dev \
             musl-dev \
             linux-headers \
+            git \
             pcre-dev \
             postgresql-dev \
             libpq \
             py-psycopg2 \
             cairo-dev \
+            mysql-client \
+            mariadb-dev \
+            unzip \
     && pip install -U pip \
     && pip install --no-cache-dir -r /requirements.txt \
     && pip install --no-cache-dir uwsgi \
@@ -42,9 +46,12 @@ RUN set -ex \
 
 # Copy your application code to the container (make sure you create a
 # .dockerignore file if any large files or directories should be excluded)
-RUN mkdir /code/
+RUN mkdir /code/ \
+    mkdir /imapbox
+
 WORKDIR /code/
 ADD . /code/
+
 
 # uWSGI will listen on this port
 EXPOSE 8000

@@ -6,3 +6,8 @@ GeoLite2-City.mmdb
 dmarc-demo-data/
 
 .docker-volumes/
+
+.idea/
+
+
+venv/

@@ -154,7 +154,7 @@ class Command(BaseCommand):
         try:
             with open(path) as file:
                 hasher = hashlib.md5()
-                hasher.update(file.read())
+                hasher.update(file.read().encode('utf-8'))
                 file_hash = hasher.hexdigest()
         except Exception as e:
             logger.error("{0} Could not hash file contents: {1}"

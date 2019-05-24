@@ -47,7 +47,8 @@ from django.db.models.fields.related import ForeignKey
 from django.db.models import Sum, Count, Max
 from django.db.models.functions import TruncDay
 
-import choices
+from website import choices
+from functools import reduce
 
 
 
@@ -249,7 +250,7 @@ class OrderedModel(models.Model):
                 self.position = self.__class__.objects.aggregate(
                         Max("position")).get("position__max", 0) + 1
 
-            except Exception, e:
+            except Exception as e:
                 # Default anyways, do this for more explicitness
                 self.position = 0
 

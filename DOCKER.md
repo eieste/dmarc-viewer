@@ -12,9 +12,9 @@ through to the docker containers to set passwords and
 Don't forget to **replace the values**.
 
 ```shell
-export DMARC_VIEWER_DB_KEY="**** REPLACE WITH DATABASE PASSWORD ****"
+export DMARC_VIEWER_DB_PASS="**** REPLACE WITH DATABASE PASSWORD ****"
 export DMARC_VIEWER_SECRET_KEY="**** REPLACE WITH LONG RANDOM STRING ****"
-export DMARC_VIEWER_ALLOWED_HOSTS="**** REPLACE WITH YOUR DOMAIN OR IP ****"
+export DMARC_VIEWER_ALLOWED_HOSTS="**** REPLACE WITH YOUR DOMAIN OR IP. SEPERATE MULTIPLE ENTRYS WITH ; ****"
 ```
 
 ## Docker compose
