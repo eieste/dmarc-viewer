@@ -1,6 +1,6 @@
 # DMARC viewer
 
-Version v0.9.0
+Version 0.9.0
 
 
 `DMARC viewer` is a [Django](https://docs.djangoproject.com/en/1.11/)-based web
