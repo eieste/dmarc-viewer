@@ -1,8 +1,11 @@
 #!/bin/sh
 set -x -e
 
-wget http://geolite.maxmind.com/download/geoip/database/GeoLite2-City.mmdb.gz
-gunzip GeoLite2-City.mmdb.gz
+if [ ! -f "GeoLite2-City.mmdb.gz" ]; then
+    wget https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-City&license_key=${GEOIP_LICENSE_IP}&suffix=tar.gz -O GeoLite2-City.mmdb.gz
+    gunzip GeoLite2-City.mmdb.gz
+fi
+
 
 
 # NOTE: Below management commands are no-ops if they ran before

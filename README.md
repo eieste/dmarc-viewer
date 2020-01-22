@@ -1,5 +1,8 @@
 # DMARC viewer
 
+Version 0.8.0
+
+
 `DMARC viewer` is a [Django](https://docs.djangoproject.com/en/1.11/)-based web
 application that lets you visually analyze [DMARC aggregate
 reports](https://dmarc.org/), providing unique insights into how your mailing
@@ -39,3 +42,24 @@ feature, discover a bug or have some general feedback, feel free to file an
 [*fork*](https://help.github.com/articles/fork-a-repo/) this repository,
 [**start coding**](CONTRIBUTE.md) and submit [*pull
 requests*](https://github.com/dmarc-viewer/dmarc-viewer/pulls).
+
+
+## Configuration
+This is a fork from the orgina [Project](https://github.com/dmarc-viewer/dmarc-viewer)
+which means that this project can load emails from a mailbox and analyze them automatically.
+This project also works with the modified GeoLite2 Database.
+To use this project you need a free license key from [maxmind.com](https://maxmind.com) (To download the GeoLite2 City database)
+
+**Configuration Variables**
+ * DMARC_VIEWER_ALLOWED_HOSTS=127.0.0.1;localhost
+ * DMARC_VIEWER_SECRET_KEY=arandomkey
+ * DMARC_VIEWER_DB_HOST=database
+ * DMARC_VIEWER_DB_NAME=dmarc-viewer
+ * DMARC_VIEWER_DB_USER=dmarc-viewer
+ * DMARC_VIEWER_DB_PASS=NOTASECRET
+ * DMARC_VIEWER_DB_ENGINE=django.db.backends.mysql
+ * DMARC_VIEWER_IMAP_HOST=mailhost.com
+ * DMARC_VIEWER_IMAP_USER=dmarcreports@mail.com
+ * DMARC_VIEWER_IMAP_PASS=NOTASECRET
+ * DMARC_VIEWER_IMAP_FOLDER=INBOX
+ * GEOIP_LICENSE_IP

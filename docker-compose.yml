@@ -3,6 +3,7 @@ version: '3'
 volumes:
   db-data:
   app-data:
+  geo-data:
 
 services:
 
@@ -22,7 +23,7 @@ services:
     environment:
       - DMARC_VIEWER_ALLOWED_HOSTS=127.0.0.1;localhost
       - DMARC_VIEWER_SECRET_KEY=arandomkey
-      - DMARC_VIEWER_DB_HOST=database
+      - DB_HOST=database
       - DMARC_VIEWER_DB_NAME=dmarc-viewer
       - DMARC_VIEWER_DB_USER=dmarc-viewer
       - DMARC_VIEWER_DB_PASS=NOTASECRET
@@ -31,6 +32,7 @@ services:
       - DMARC_VIEWER_IMAP_USER=dmarcreports@mail.com
       - DMARC_VIEWER_IMAP_PASS=NOTASECRET
       - DMARC_VIEWER_IMAP_FOLDER=INBOX
+      - GEOIP_LICENSE_IP
     depends_on:
       - database
     build:
@@ -40,3 +42,5 @@ services:
       - "8000:8000"
     volumes:
       - app-data:/code/shared:ro
+      - geo-data:/code/GeoLite2-City.mmdb
+  

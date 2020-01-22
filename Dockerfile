@@ -22,6 +22,7 @@ RUN set -ex \
             libpq \
             py-psycopg2 \
             cairo-dev \
+            shared-mime-info \
             mysql-client \
             mariadb-dev \
             unzip \
@@ -44,14 +45,16 @@ RUN set -ex \
     # && apk add --virtual .python-rundeps $runDeps \
     # && apk del .build-deps
 
+ADD https://raw.githubusercontent.com/lucidfrontier45/docker-python-uwsgi/master/mime.types /etc/mime.types
+
 # Copy your application code to the container (make sure you create a
 # .dockerignore file if any large files or directories should be excluded)
-RUN mkdir /code/ \
-    mkdir /imapbox
+RUN mkdir /code/; \
+    mkdir /imapbox; \
+    chmod a+r /etc/mime.types
 
 WORKDIR /code/
 ADD . /code/
-
 
 # uWSGI will listen on this port
 EXPOSE 8000
@@ -77,7 +80,8 @@ ENV UWSGI_WSGI_FILE=dmarc_viewer/wsgi.py \
     UWSGI_WSGI_ENV_BEHAVIOR=holy \
     UWSGI_HTTP_AUTO_CHUNKED=1 \
     UWSGI_HTTP_KEEPALIVE=1 \
-    UWSGI_STATIC_MAP=/static=/var/www/dmarc_viewer/static
+    UWSGI_STATIC_MAP=/static=/var/www/dmarc_viewer/static \
+    UWSGI_MIME_FILE=/etc/mime.types
 
 ENTRYPOINT ["/code/docker-entrypoint.sh"]
 
