@@ -9,6 +9,8 @@ ADD requirements.txt /requirements.txt
 # all in a single step. Correct the path to your production requirements file,
 # if needed.
 RUN set -ex \
+    && apk add --no-cache postgresql-dev gcc musl-dev &&
+    pip install psycopg2 \
     && apk add --no-cache --virtual .build-deps \
             gcc \
             make \
