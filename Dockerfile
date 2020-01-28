@@ -57,7 +57,8 @@ RUN mkdir /code/; \
 WORKDIR /code/
 ADD . /code/
 
-RUN cd /code/; python manage.py makemigrations website --noinput
+ENV DMARC_VIEWER_SECRET_KEY=ka44jla4h4oa4iA$HTah4otuha4ZAih4ZOiah4
+
 
 # uWSGI will listen on this port
 EXPOSE 8000
