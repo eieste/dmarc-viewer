@@ -22,7 +22,6 @@ RUN set -ex \
             pcre-dev \
             postgresql-dev \
             libpq \
-            py-psycopg2 \
             cairo-dev \
             shared-mime-info \
             mysql-client \
