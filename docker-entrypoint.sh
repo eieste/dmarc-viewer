@@ -2,7 +2,7 @@
 set -x -e
 
 if [ ! -f "GeoLite2-City.mmdb.gz" ]; then
-    wget -O GeoLite2-City.mmdb.gz https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-City\&license_key=${GEOIP_LICENSE_IP}\&suffix=tar.gz
+    wget -O GeoLite2-City.mmdb.gz "https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-City&license_key=${GEOIP_LICENSE_IP}&suffix=tar.gz"
     gunzip GeoLite2-City.mmdb.gz
 fi
 
