@@ -1,8 +1,11 @@
 #!/bin/sh
 set -x -e
 
-if [ ! -f "GeoLite2-City.mmdb.gz" ]; then
+if [ ! -f "GeoLite2-City.mmdb.gz" -a ! -f "GeoLite2-City.mmdb" ]; then
     wget -O GeoLite2-City.mmdb.gz "https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-City&license_key=${GEOIP_LICENSE_IP}&suffix=tar.gz"
+fi
+
+if [ ! -f "GeoLite2-City.mmdb" ]; then
     gunzip GeoLite2-City.mmdb.gz
 fi
 
